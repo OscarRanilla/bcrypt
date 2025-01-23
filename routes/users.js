@@ -34,7 +34,7 @@ router.get('/dashboard', verifyToken, (req, res) => {
                 <button type="submit">Cerrar sesión</button> 
             </form> 
             `); 
-        } else { res.status(401).json({ message: 'Usuario no encontrado' }); 
+        } else { res.status(401).json({ message: 'Usuario no autorizado, token invalido' }); 
         } 
 });
 
@@ -44,6 +44,7 @@ router.get('/dashboard', verifyToken, (req, res) => {
 
 router.post('/logout', (req, res) => { 
     req.session.destroy(); 
+    res.json({ mensaje: 'Has cerrado sesión'});
     res.redirect('/'); 
 });
 

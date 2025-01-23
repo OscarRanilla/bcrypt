@@ -2,14 +2,13 @@
 
 const express = require('express');
 const session = require('express-session');
-const bodyparser = require('body-parser');
+const { hashedSecret } = require('./crypto/config');
+const app = express();
+const PORT = 3000;
 
 //NOS TRAEMOS A LA RUTA ROUTES/USERS
 
 const usersRouter = require('./routes/users');
-
-const app = express();
-const PORT = 3000;
 
 // Middleware para manejar datos de formulario y JSON
 
@@ -21,7 +20,7 @@ app.use(express.json());
 app.use(
     session({
         //este secreto utiliza una clave para generar el token esta firma debe ser única
-        secret: 'tu_secreto_es_secreto',
+        secret: hashedSecret,
         //resave permite que si hay un cambio de sesion se guarde colocando como false, si no colocamos ese resave se guardará siempre dentro de nuestra sesion
         resave: false,
         //saveUnitialized esto se coloca en true, para que se guarde nuestra sesion de inicio
